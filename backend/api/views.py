@@ -283,7 +283,14 @@ class DashboardPostCommentAPIView(APIView):
         return Response(
             {"message": "Comment Response Sent"}, status=status.HTTP_201_CREATED
         )
+        
+class DashboardCommentLists(generics.ListAPIView):
+    serializer_class = api_serializer.CommentSerializer
+    permission_classes = [AllowAny]
 
+    def get_queryset(self):
+        return api_models.Comment.objects.all()
+        
 class DashboardPostCreateAPIView(generics.CreateAPIView):
     serializer_class = api_serializer.PostSerializer
     permission_classes = [AllowAny]
